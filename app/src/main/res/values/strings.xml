@@ -1,6 +1,26 @@
 <resources>
-    <string name="app_name">demoChat</string>
+    <string name="app_name">DemoChat</string>
 
     <!-- SnackBar-->
     <string name="snackbar_error_title">Error</string>
+
+    <!-- Nav Bottom-->
+    <string name="tab1">Tab1</string>
+    <string name="tab2">Tab2</string>
+    <string name="tab3">Tab3</string>
+    <string name="tab4">Tab4</string>
+    <color name="text_color_hint">#999999</color>
+
+    <!-- Login -->
+    <string name="tvRegister">Register</string>
+    <string name="tvUserName">User Name</string>
+    <string name="tvPassword">Password</string>
+    <string name="tvConfirmPassword">Confirm Password</string>
+    <string name="tvGender">Gender</string>
+    <string name="tvMail">Email</string>
+    <string name="tvPhone">Phone</string>
+    <string name="tvLogin">LOGIN</string>
+    <string name="male">Male</string>
+    <string name="female">FeMale</string>
+
 </resources>

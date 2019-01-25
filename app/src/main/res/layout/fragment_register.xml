@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.activities.SignInSignUpActivity">
+
+    <include
+        layout="@layout/toolbar_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin20">
+
+            <TextView
+                android:id="@+id/titleName"
+                style="@style/signInUpTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tvUserName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/edUserName"
+                style="@style/signInUpInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleName" />
+
+
+            <TextView
+                android:id="@+id/titlePass"
+                style="@style/signInUpTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tvPassword"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edUserName" />
+
+            <EditText
+                android:id="@+id/edPass"
+                style="@style/signInUpInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titlePass" />
+
+            <TextView
+                android:id="@+id/titleConfirmPass"
+                style="@style/signInUpTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tvConfirmPassword"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edPass" />
+
+            <EditText
+                android:id="@+id/edConfirmPass"
+                style="@style/signInUpInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleConfirmPass" />
+
+            <TextView
+                android:id="@+id/titleGender"
+                style="@style/signInUpTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tvGender"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edConfirmPass" />
+
+            <RadioGroup
+                android:id="@+id/rgGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin20"
+                android:layout_marginTop="@dimen/margin20"
+                android:layout_marginEnd="@dimen/margin20"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleGender">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/border_blue"
+                    android:text="@string/male"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/border_blue"
+                    android:text="@string/female"
+                    android:textSize="16sp" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/titleMail"
+                style="@style/signInUpTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tvMail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rgGender" />
+
+            <EditText
+                android:id="@+id/edMail"
+                style="@style/signInUpInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleMail" />
+
+            <TextView
+                android:id="@+id/titlePhone"
+                style="@style/signInUpTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tvPhone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edMail" />
+
+            <EditText
+                android:id="@+id/edPhoneNumber"
+                style="@style/signInUpInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin20"
+                android:inputType="phone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titlePhone" />
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin30"
+                android:background="@drawable/btn_bgr_login"
+                android:text="@string/tvRegister"
+                android:textColor="@color/white"
+                android:textSize="@dimen/register_tvSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edPhoneNumber" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.constraint.ConstraintLayout>

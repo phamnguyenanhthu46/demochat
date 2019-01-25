@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">@color/black</color>
+    <color name="colorPrimaryDark">@color/black</color>
+    <color name="colorAccent">@color/black</color>
 
     <color name="red">#E50012</color>
     <color name="white">#ffffff</color>
     <color name="border">#d6d6d6</color>
+    <color name="black">#000000</color>
     <color name="grey">#363636</color> <!-- hsl(0, 0, 21%) -->
 
+    <!-- User list-->
+    <color name="border_blue">#039BE5</color>
 </resources>

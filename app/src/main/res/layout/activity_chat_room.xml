@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/btnBack_padding"
+                android:src="@drawable/ic_keyboard_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/right"
+                app:layout_constraintStart_toEndOf="@id/btnBack"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlCompat" />
+
+            <ImageView
+                android:id="@+id/right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/btnBack_padding"
+                android:src="@drawable/ic_keyboard_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fadeScrollbars="false"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="@dimen/bottomNavigation_elevation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fadeScrollbars="true"
+            android:hint="メッセージを追加"
+            android:maxLines="5"
+            android:paddingBottom="16dp"
+            android:paddingEnd="24dp"
+            android:paddingStart="24dp"
+            android:paddingTop="16dp"
+            android:scrollbars="vertical"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/actions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/actions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/cameraAction"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingBottom="16dp"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:tint="@color/grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                tools:ignore="RtlCompat" />
+
+            <ImageView
+                android:id="@+id/galleryAction"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingBottom="16dp"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:tint="@color/grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cameraAction"
+                app:layout_constraintTop_toTopOf="parent"
+               />
+
+            <ImageView
+                android:id="@+id/sendAction"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingBottom="16dp"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                 />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <!--dummy container-->
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/bottomNavigationBase"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:paddingEnd="24dp"
+            android:paddingStart="24dp"
+            android:paddingTop="16dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/spacer1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Space
+            android:id="@+id/spacer1"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>
