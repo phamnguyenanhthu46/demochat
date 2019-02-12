@@ -1,6 +1,7 @@
 package tool.devp.demochat.data.model
 
 import tool.devp.demochat.data.entities.UserEntity
+import java.io.Serializable
 import java.util.*
 
 data class UserModel(
@@ -16,7 +17,7 @@ data class UserModel(
         var phone: String? = null,
         var country: String? = null,
         var timestamp: Date
-) {
+) : Serializable{
     companion object {
         fun newInstance(entity: UserEntity): UserModel =
                 UserModel(

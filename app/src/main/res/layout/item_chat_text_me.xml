@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/dimen12"
+    android:paddingStart="@dimen/dimen24">
+
+    <include
+        android:id="@+id/viewTime"
+        layout="@layout/item_group_time_chat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/viewContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/img_size_status"
+        android:gravity="right"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewTime"
+        app:layout_constraintWidth_percent="0.8">
+
+        <TextView
+            android:id="@+id/createdAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/dimen7"
+            android:textSize="@dimen/tz_time"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="12:15" />
+
+        <TextView
+            android:id="@+id/speech"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/baloon_right"
+            android:padding="@dimen/chatItem_paddingHorizontal"
+            android:textColor="@color/white"
+            android:maxLength="500"
+            android:textSize="@dimen/tz_chat_content"
+            tools:text="ádasdadasdasdasdasdasdasdasdasdasdasda" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgSuccess"
+        android:layout_width="@dimen/img_size_status"
+        android:layout_height="@dimen/img_size_status"
+        android:src="@drawable/ic_success"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/viewContent" />
+
+</android.support.constraint.ConstraintLayout>

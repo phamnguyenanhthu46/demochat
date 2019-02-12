@@ -2,6 +2,7 @@ package tool.devp.demochat.presentation.fragments
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import kotlinx.android.synthetic.main.fragment_top.*
 import tool.devp.demochat.R
 import tool.devp.demochat.base.BaseFragment
 import tool.devp.demochat.extension.initViewModel
+import tool.devp.demochat.presentation.activities.ChatRoomActivity
 import tool.devp.demochat.presentation.adapters.ListUserAdapter
 import tool.devp.demochat.presentation.viewmodels.TopViewModel
 
@@ -31,12 +33,17 @@ class TopFragment : BaseFragment<TopViewModel>() {
                     userAdapter?.addData(users)
                 }
             })
+            onChatClick.observe(this@TopFragment, Observer {
+                it?.let {
+                    ChatRoomActivity.start(this@TopFragment.context!!,it)
+                }
+            })
             start()
         }
     }
 
     private fun initListUser(){
-        userAdapter = ListUserAdapter(context!!,ArrayList()).apply {
+        userAdapter = ListUserAdapter(context!!, viewModel, ArrayList()).apply {
             rcvUser.adapter = this
         }
     }

@@ -43,7 +43,7 @@ class RegisterFragment : BaseFragment<RegisterViewModel>() {
     }
 
     private fun initView() {
-        title.text = resources.getString(R.string.tvRegister)
+        tvTitle.text = resources.getString(R.string.tvRegister)
     }
 
     private fun setActions() {

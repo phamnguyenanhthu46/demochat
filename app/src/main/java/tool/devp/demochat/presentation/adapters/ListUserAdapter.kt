@@ -7,10 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_user.view.*
 import tool.devp.demochat.R
+import tool.devp.demochat.common.DemoChatApp
 import tool.devp.demochat.data.entities.UserEntity
 import tool.devp.demochat.data.model.UserModel
+import tool.devp.demochat.extension.invisible
+import tool.devp.demochat.extension.loadImage
+import tool.devp.demochat.presentation.viewmodels.TopViewModel
 
-class ListUserAdapter(context: Context, var users: ArrayList<UserModel>) : RecyclerView.Adapter<ListUserAdapter.UserViewHolder>() {
+class ListUserAdapter(context: Context, private val viewModel: TopViewModel, var users: ArrayList<UserModel>) : RecyclerView.Adapter<ListUserAdapter.UserViewHolder>() {
     private val layoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): UserViewHolder = UserViewHolder(layoutInflater.inflate(R.layout.item_user, p0, false))
@@ -21,21 +25,39 @@ class ListUserAdapter(context: Context, var users: ArrayList<UserModel>) : Recyc
         holder.bindata(users[position])
     }
 
-    fun addData(listUser: List<UserModel>){
+    fun addData(listUser: List<UserModel>) {
         users.addAll(listUser)
+        /**
+         * move my account to top
+         */
+        DemoChatApp.INTANCE?.store?.userInfo?.let { user ->
+            var myAcc = users.firstOrNull {
+                it.email == user.email
+            }
+            myAcc?.let {
+                users.remove(it)
+                users.add(0, it)
+            }
+        }
         notifyDataSetChanged()
     }
 
     inner class UserViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-         fun bindata(user: UserModel){
-            when(user.gender){
+        fun bindata(user: UserModel) {
+            if(adapterPosition == 0) itemView.btnChat.invisible()
+            when (user.gender) {
                 UserEntity.GENDER.MALE.value -> {
-
+                    itemView.imgAvatar.loadImage(itemView.context, R.drawable.ic_boy)
                 }
-                else -> {}
+                else -> {
+                    itemView.imgAvatar.loadImage(itemView.context, R.drawable.ic_girl)
+                }
             }
-             itemView.tvUserName.text = user.userName
-             itemView.tvMail.text = user.email
+            itemView.tvUserName.text = user.userName
+            itemView.tvMail.text = user.email
+            itemView.btnChat.setOnClickListener {
+                viewModel.onChatClick.value = user
+            }
         }
     }
 }

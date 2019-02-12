@@ -4,16 +4,33 @@
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="bottomNavigation_elevation">6dp</dimen>
 
+    <!-- Common -->
+    <dimen name="dimen5">5dp</dimen>
+    <dimen name="dimen7">7dp</dimen>
+    <dimen name="dimen15">15dp</dimen>
+    <dimen name="dimen10">10dp</dimen>
+    <dimen name="dimen12">12dp</dimen>
+    <dimen name="dimen16">16dp</dimen>
+    <dimen name="dimen24">24dp</dimen>
+
     <!-- Chat screen -->
     <dimen name="btnBack_padding">5dp</dimen>
+    <dimen name="btn_camera_size">56dp</dimen>
+    <dimen name="tz_time">12sp</dimen>
+    <dimen name="img_size_status">20dp</dimen>
+    <dimen name="chatItem_paddingHorizontal">12dp</dimen>
+    <dimen name="tz_chat_content">16sp</dimen>
 
     <!-- User list -->
-    <dimen name="avatar_size">70dp</dimen>
-    <dimen name="chat_icon_size">70dp</dimen>
+    <dimen name="avatar_size">150dp</dimen>
+    <dimen name="chat_icon_size">150dp</dimen>
     <dimen name="margin20">20dp</dimen>
     <dimen name="margin30">30dp</dimen>
     <dimen name="tvSizeTitle">26sp</dimen>
+    <dimen name="marginItem">30dp</dimen>
 
     <!-- Register -->
     <dimen name="register_tvSize">20sp</dimen>
+
+
 </resources>

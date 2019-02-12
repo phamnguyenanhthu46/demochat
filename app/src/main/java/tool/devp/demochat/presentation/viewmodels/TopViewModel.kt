@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.MutableLiveData
 import io.reactivex.disposables.CompositeDisposable
 import tool.devp.demochat.base.BaseViewModel
+import tool.devp.demochat.common.DemoChatApp
 import tool.devp.demochat.data.model.UserModel
 import tool.devp.demochat.data.repository.UserRepository
 import tool.devp.demochat.presentation.schedulers.SchedulerProvider
@@ -12,6 +13,7 @@ class TopViewModel(application: Application,
                    var userRepository: UserRepository) : BaseViewModel(application) {
     private val subscriptions = CompositeDisposable()
     val users = MutableLiveData<List<UserModel>>()
+    val onChatClick = MutableLiveData<UserModel>()
 
     fun start() {
         subscriptions.add(

@@ -13,4 +13,9 @@
     <!-- User list-->
     <color name="border_blue">#039BE5</color>
     <color name="tranparent">#0D000000</color>
+
+    <!-- Chat -->
+    <color name="divider_color_setting">#f1f1f1</color>
+    <color name="tv_chat_receive">#333333</color>
+    <color name="greyLight">#737373</color>
 </resources>

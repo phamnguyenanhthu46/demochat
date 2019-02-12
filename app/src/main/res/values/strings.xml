@@ -29,4 +29,10 @@
     <string name="error_user_name_invalid">User Name not empty</string>
     <string name="error_mail_pass_incorrect">Maid Pass incorrect</string>
 
+    <!-- ListUser-->
+    <string name="btn_chat_text">Chat</string>
+
+    <!-- Chat-->
+    <string name="chat_hint">Add message</string>
+
 </resources>

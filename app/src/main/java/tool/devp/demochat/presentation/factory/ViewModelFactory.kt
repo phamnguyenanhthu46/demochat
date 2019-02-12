@@ -5,13 +5,17 @@ import android.app.Fragment
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
+import tool.devp.demochat.data.ChatRoomRemoteDataSource
+import tool.devp.demochat.data.MessageRemoteDataSource
 import tool.devp.demochat.data.UserRemoteDataSource
 import tool.devp.demochat.data.getInstance
 import tool.devp.demochat.data.repository.UserRepository
 import tool.devp.demochat.presentation.viewmodels.*
 
 class ViewModelFactory(context: Context,
-                       private val userDataSource: UserRepository) : ViewModelProvider.NewInstanceFactory() {
+                       private val userDataSource: UserRepository,
+                       private val chatRoomRemoteDataSource: ChatRoomRemoteDataSource,
+                       private val messageRemoteDataSource: MessageRemoteDataSource) : ViewModelProvider.NewInstanceFactory() {
     private val application = when (context) {
         is Activity -> context.application
         is Fragment -> context.activity.application
@@ -43,6 +47,9 @@ class ViewModelFactory(context: Context,
                     isAssignableFrom(MyPageViewModel::class.java) -> {
                         MyPageViewModel(application)
                     }
+                    isAssignableFrom(ChatRoomViewModel::class.java) -> {
+                        ChatRoomViewModel(application,chatRoomRemoteDataSource,messageRemoteDataSource)
+                    }
                     else -> throw IllegalStateException("unknown view model: $modelClass")
                 }
             } as T
@@ -51,7 +58,9 @@ class ViewModelFactory(context: Context,
     companion object {
         fun getInstance(activity: Context): ViewModelFactory = ViewModelFactory(
                 activity,
-                UserRemoteDataSource.getInstance()
+                UserRemoteDataSource.getInstance(),
+                ChatRoomRemoteDataSource.getInstance(),
+                MessageRemoteDataSource.getInstance()
         )
     }
 }

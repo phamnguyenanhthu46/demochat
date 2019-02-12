@@ -12,11 +12,11 @@ import tool.devp.demochat.data.model.MessageModel
 import tool.devp.demochat.data.repository.MessageRepository
 
 class MessageRemoteDataSource(database: FirebaseFirestore,
-                              private val converter: FirebaseConverter<MessageModel>) : MessageRepository {
+                              private val converter: FirebaseConverter<MessageModel>) {
     private val reference = database.collection(COLLECTION_MESSAGE)
     private var messageRegistration: ListenerRegistration? = null
 
-    override fun postMessage(roomId: String, model: MessageModel): Completable =
+     fun postMessage(roomId: String, model: MessageModel): Completable =
             Completable.create { emitter ->
                 reference.document(roomId).collection(COLLECTION_MESSAGE_OF_ROOM).document()
                         .set(MessageEntity.newInstance(model))
@@ -29,7 +29,7 @@ class MessageRemoteDataSource(database: FirebaseFirestore,
             }
 
 
-    override fun messages(roomId: String, firstItem: String?): Observable<List<MessageModel>> =
+     fun messages(roomId: String, firstItem: String?): Observable<List<MessageModel>> =
             Single.create<List<MessageModel>> { emiter ->
                 var query = reference.document(roomId).collection(COLLECTION_MESSAGE_OF_ROOM)
                         .orderBy(ATTR_CREATE_AT, Query.Direction.DESCENDING)
@@ -66,7 +66,7 @@ class MessageRemoteDataSource(database: FirebaseFirestore,
             }.toObservable()
 
 
-    override fun deleteMessage(roomId: String, id: String): Completable =
+     fun deleteMessage(roomId: String, id: String): Completable =
             Completable.create { emitter ->
                 reference.document(roomId).collection(COLLECTION_MESSAGE_OF_ROOM).document(id).delete()
                         .addOnSuccessListener {
@@ -77,7 +77,7 @@ class MessageRemoteDataSource(database: FirebaseFirestore,
                         }
             }
 
-    override fun subscribeMessage(roomId: String, firstItem: String?, listener: MessageListener) {
+     fun subscribeMessage(roomId: String, firstItem: String?, listener: MessageListener) {
         messageRegistration?.remove()
         var collectionRef = reference.document(roomId).collection(COLLECTION_MESSAGE_OF_ROOM)
         if (firstItem == null) {
@@ -109,14 +109,6 @@ class MessageRemoteDataSource(database: FirebaseFirestore,
                     }
         }
 
-    }
-
-    override fun getLastRead(roomId: String, last: String): Observable<String> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun setLastRead(roomId: String, last: String): Completable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     interface MessageListener {

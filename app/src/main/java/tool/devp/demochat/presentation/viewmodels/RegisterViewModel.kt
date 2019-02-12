@@ -11,6 +11,7 @@ import tool.devp.demochat.R
 import tool.devp.demochat.base.BaseViewModel
 import tool.devp.demochat.common.DemoChatApp
 import tool.devp.demochat.common.Optional
+import tool.devp.demochat.data.entities.UserEntity
 import tool.devp.demochat.data.model.UserModel
 import tool.devp.demochat.data.repository.UserRepository
 import tool.devp.demochat.extension.isEmail
@@ -33,21 +34,15 @@ class RegisterViewModel(application: Application,
     val repassword = MutableLiveData<String>()
     val phoneNumber = MutableLiveData<String>()
     val lastName = MutableLiveData<String>()
-    val gender = MutableLiveData<Int>()
+    val gender = MutableLiveData<Int>().apply {
+        value = UserEntity.GENDER.MALE.value
+    }
     val loading = MutableLiveData<Boolean>()
 
     val success = MutableLiveData<Boolean>()
 
     private val subscriptions = CompositeDisposable()
 
-    private fun updateAttempable() {
-        isAttemptable.value = !emailAddress.value.isNullOrBlank()
-                && !username.value.isNullOrBlank()
-                && !password.value.isNullOrBlank()
-                && !repassword.value.isNullOrBlank()
-                && !lastName.value.isNullOrBlank()
-                && gender.value != null
-    }
 
     private fun verify() {
         if (username.value?.contains(" ") != false) {
@@ -99,7 +94,7 @@ class RegisterViewModel(application: Application,
                                     onRegisterSuccess()
                                 },
                                 {
-                                    handleEror(it)
+                                    handleError(it)
                                 }
                         )
         )
@@ -145,7 +140,7 @@ class RegisterViewModel(application: Application,
         subscriptions.clear()
     }
 
-    private fun handleEror(e: Throwable) {
+    private fun handleError(e: Throwable) {
         if (e is SignException) {
             when (e.code) {
                 INVALID_USER_NAME -> {

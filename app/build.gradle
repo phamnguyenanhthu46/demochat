@@ -44,7 +44,9 @@ dependencies {
     implementation "com.android.support:design:$support_design_version"
 
     implementation "com.google.firebase:firebase-firestore:$cloud_firestore_version"
-//    implementation 'com.google.firebase:firebase-storage:16.0.5'
+    implementation 'com.google.firebase:firebase-storage:16.0.5'
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 }
 
 apply plugin: 'com.google.gms.google-services'

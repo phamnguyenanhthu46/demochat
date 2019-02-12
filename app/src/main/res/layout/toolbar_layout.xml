@@ -4,8 +4,8 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    app:contentInsetEnd="@dimen/margin20"
-    app:contentInsetStart="@dimen/margin20">
+    app:contentInsetEnd="0dp"
+    app:contentInsetStart="0dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,16 +13,20 @@
 
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:layout_marginStart="@dimen/dimen5"
+            android:layout_width="@dimen/btn_camera_size"
+            android:layout_height="@dimen/btn_camera_size"
+            android:padding="@dimen/dimen16"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_back_black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -36,14 +40,21 @@
 
         <ImageView
             android:id="@+id/right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:layout_width="@dimen/btn_camera_size"
+            android:layout_height="@dimen/btn_camera_size"
+            android:padding="@dimen/dimen16"
             android:src="@drawable/ic_back_black"
+            android:layout_marginEnd="@dimen/dimen5"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/shadow" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.Toolbar>

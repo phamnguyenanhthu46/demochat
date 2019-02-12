@@ -12,6 +12,6 @@ class DemoChatApp : Application() {
     }
 
     companion object {
-        var INTANCE: DemoChatApp? = null
+        lateinit var INTANCE: DemoChatApp
     }
 }

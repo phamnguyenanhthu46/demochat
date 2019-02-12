@@ -12,6 +12,7 @@
     <style name="nameContent">
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:layout_marginEnd">@dimen/dimen10</item>
     </style>
 
     <!-- SignIn SignUp -->
