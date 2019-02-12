@@ -13,14 +13,12 @@ data class MessageModel(var id: String,
 
                         var senderID: String? = null,
 
-                        var senderName: String? = null,
-
                         var action: String? = null,
 
                         var timeTemp: Date?
 
 ) {
-    enum class MESSAGE(var type: Int) {
+    enum class TYPE(var value: Int) {
         TEXT(1),
         IMAGE(2),
     }
@@ -32,7 +30,6 @@ data class MessageModel(var id: String,
                         createdAt = mes.createdAt,
                         messageType = mes.messageType,
                         senderID = mes.senderID,
-                        senderName = mes.senderName,
                         action = "",
                         timeTemp = mes.timeTemp)
     }

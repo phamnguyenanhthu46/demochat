@@ -2,6 +2,7 @@ package tool.devp.demochat.data
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.MetadataChanges
 import com.google.firebase.firestore.Query
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -82,7 +83,7 @@ class MessageRemoteDataSource(database: FirebaseFirestore,
         var collectionRef = reference.document(roomId).collection(COLLECTION_MESSAGE_OF_ROOM)
         if (firstItem == null) {
             messageRegistration = collectionRef.orderBy(ATTR_CREATE_AT, Query.Direction.ASCENDING)
-                    .addSnapshotListener { snapshot, e ->
+                    .addSnapshotListener (MetadataChanges.INCLUDE){ snapshot, e ->
                         snapshot?.let {
                             if ( snapshot.metadata.hasPendingWrites()){
                                 listener.onMessageLocal( it.documentChanges.map { converter.deserialize(it) })

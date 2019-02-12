@@ -7,14 +7,12 @@ import android.arch.lifecycle.MutableLiveData
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.util.Log
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
-import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import tool.devp.demochat.base.BaseViewModel
 import tool.devp.demochat.common.DemoChatApp
@@ -28,11 +26,15 @@ import tool.devp.demochat.extension.getImagePathFromUri
 import tool.devp.demochat.presentation.activities.ChatRoomActivity.Companion.REQUEST_CODE_PICK_PICTURE
 import tool.devp.demochat.presentation.activities.ChatRoomActivity.Companion.REQUEST_CODE_TAKE_PICTURE
 import tool.devp.demochat.presentation.schedulers.SchedulerProvider
+import tool.devp.demochat.presentation.uimodel.MessageUiModel
 import java.io.File
+import java.util.*
 
-class ChatRoomViewModel(application: Application, private val roomRemote: ChatRoomRemoteDataSource, private val messageRemote: MessageRemoteDataSource) : BaseViewModel(application) {
+class ChatRoomViewModel(application: Application, private val roomRemote: ChatRoomRemoteDataSource, private val messageRemote: MessageRemoteDataSource) : BaseViewModel(application), MessageRemoteDataSource.MessageListener {
     val titleString = MutableLiveData<String>()
-    lateinit var mRoomId: String
+    val newMessage = MutableLiveData<MessageUiModel>()
+    private lateinit var mRoomId: String
+    var senderId: String = DemoChatApp.INTANCE.store.userInfo!!.email!!
     private var imagePatch: String? = null
     private val subscriptions = CompositeDisposable()
 
@@ -48,7 +50,29 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
     }
 
     fun sendMessage(content: String) {
+        MessageModel(
+                id = "",
+                content = content,
+                messageType = MessageModel.TYPE.TEXT.value,
+                senderID = senderId,
+                timeTemp = Calendar.getInstance().time
+                ).apply {
+            postMessage(this)
+        }
+    }
 
+    private fun postMessage(mes: MessageModel){
+        subscriptions.add(
+                messageRemote.postMessage(mRoomId, mes)
+                        .subscribeOn(SchedulerProvider.io())
+                        .observeOn(SchedulerProvider.ui())
+                        .subscribe(
+                                {},
+                                {
+                                    Log.d("PhamDinhTuan", "")
+                                }
+                        )
+        )
     }
 
     @SuppressLint("CheckResult")
@@ -56,7 +80,10 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
         subscriptions.add(
                 roomRemote.getChatRoom(users)
                         .doOnNext {
-                            if (it.isPresent) mRoomId = it.get().id
+                            if (it.isPresent) {
+                                mRoomId = it.get().id
+                                messageRemote.subscribeMessage(mRoomId,null,this)
+                            }
                         }
                         .flatMap {
                             if (it.isPresent) {
@@ -104,7 +131,7 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
         }
     }
 
-    fun uploadImageToFireStore(patch: String){
+    fun uploadImageToFireStore(patch: String) {
         val storage = FirebaseStorage.getInstance("gs://demochatfirebase-d15e7.appspot.com")
         val storageRef = storage.reference
 
@@ -115,17 +142,18 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
         val urlTask = uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
             if (!task.isSuccessful) {
                 task.exception?.let {
-                    Log.d("PhamDinhTuan","")
+                    Log.d("PhamDinhTuan", "")
                 }
             }
             return@Continuation fileRef.downloadUrl
         }).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val downloadUri = task.result
-                Log.d("PhamDinhTuan","")
+                Log.d("PhamDinhTuan", "")
             }
         }
     }
+
     fun createUri(): Uri {
         var directory = File(context.getAppDir(), "${System.currentTimeMillis()}.jpg")
         imagePatch = directory.absolutePath
@@ -149,4 +177,19 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
         }
     }
 
+    override fun onMessageLocal(items: List<MessageModel>) {
+        items.forEach {
+            newMessage.value = MessageUiModel.newIntance(senderId,it).apply {
+                status = MessageUiModel.STATUS.PENDING.value
+            }
+        }
+    }
+
+    override fun onMessageServer(items: List<MessageModel>) {
+        items.forEach {
+            newMessage.value = MessageUiModel.newIntance(senderId,it).apply {
+                status = MessageUiModel.STATUS.SUCCESS.value
+            }
+        }
+    }
 }

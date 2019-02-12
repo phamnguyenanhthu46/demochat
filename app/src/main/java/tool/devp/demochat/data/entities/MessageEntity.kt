@@ -13,8 +13,6 @@ data class MessageEntity(
 
         var senderID: String? = null,
 
-        var senderName: String? = null,
-
         var timeTemp: Date?= null
 
 ) {
@@ -25,7 +23,6 @@ data class MessageEntity(
                         createdAt = null,
                         messageType = mes.messageType,
                         senderID = mes.senderID,
-                        senderName = mes.senderName,
                         timeTemp = mes.timeTemp)
     }
 }

@@ -41,6 +41,11 @@ class ChatRoomActivity : BaseActivity<ChatRoomViewModel>() {
                     tvTitle.text = it
                 }
             })
+            newMessage.observe(this@ChatRoomActivity, Observer {
+                it?.let {
+                    chatAdapter?.addOrUpdate(it)
+                }
+            })
         }
         intent?.let {
             it.getSerializableExtra(KEY_TARGET_USER)?.let { it ->
@@ -59,6 +64,9 @@ class ChatRoomActivity : BaseActivity<ChatRoomViewModel>() {
     }
 
     private fun setActions() {
+        btnBack.setOnClickListener {
+            finish()
+        }
         editText.run {
             addOnTextChangedListener { s, _, _, _ ->
                 sendAction.isEnabled = s.isNotEmpty()
@@ -76,6 +84,7 @@ class ChatRoomActivity : BaseActivity<ChatRoomViewModel>() {
         }
         sendAction.setOnClickListener {
             viewModel.sendMessage(editText.text.toString())
+            editText.setText("")
         }
     }
 

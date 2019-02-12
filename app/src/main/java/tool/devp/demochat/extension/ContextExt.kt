@@ -7,6 +7,8 @@ import android.provider.MediaStore
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun Context.getColorByResource(@ColorRes res: Int): Int = ContextCompat.getColor(this, res)
 
@@ -23,3 +25,18 @@ fun Context.getImagePathFromUri(uri: Uri): String {
     c.close()
     return path
 }
+
+fun Date?.hasTheSameDayAs(comp: Date?): Boolean =
+        (this?.date == comp?.date && this?.month == comp?.month && this?.year == comp?.year)
+
+fun Date.converDateString(timeformat: String): String {
+    return try {
+        var dateformat = SimpleDateFormat(timeformat)
+        dateformat.format(this)
+    } catch (e: Exception) {
+        ""
+    }
+}
+
+const val DATE_FORMAT = "yyyy/MM/dd"
+const val TIME_FORMAT = "HH:mm"
