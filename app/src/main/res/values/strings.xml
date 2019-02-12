@@ -22,5 +22,11 @@
     <string name="tvLogin">LOGIN</string>
     <string name="male">Male</string>
     <string name="female">FeMale</string>
+    <string name="error_invalid_email">The mail is incorrect.</string>
+    <string name="error_email_exit">Email already exists</string>
+    <string name="error_pass_not_match">Confirmation password does not match password.</string>
+    <string name="error_password_invalid">Please enter at least 8 characters for the password without a space.</string>
+    <string name="error_user_name_invalid">User Name not empty</string>
+    <string name="error_mail_pass_incorrect">Maid Pass incorrect</string>
 
 </resources>

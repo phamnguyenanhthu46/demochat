@@ -5,11 +5,13 @@ import android.app.Fragment
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
-import tool.devp.demochat.presentation.viewmodels.LoginViewModel
-import tool.devp.demochat.presentation.viewmodels.RegisterViewModel
-import tool.devp.demochat.presentation.viewmodels.SignInSignUpViewModel
+import tool.devp.demochat.data.UserRemoteDataSource
+import tool.devp.demochat.data.getInstance
+import tool.devp.demochat.data.repository.UserRepository
+import tool.devp.demochat.presentation.viewmodels.*
 
-class ViewModelFactory(context: Context) : ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory(context: Context,
+                       private val userDataSource: UserRepository) : ViewModelProvider.NewInstanceFactory() {
     private val application = when (context) {
         is Activity -> context.application
         is Fragment -> context.activity.application
@@ -24,10 +26,22 @@ class ViewModelFactory(context: Context) : ViewModelProvider.NewInstanceFactory(
                         SignInSignUpViewModel(application)
                     }
                     isAssignableFrom(LoginViewModel::class.java) -> {
-                        LoginViewModel(application)
+                        LoginViewModel(application,userDataSource)
                     }
                     isAssignableFrom(RegisterViewModel::class.java) -> {
-                        RegisterViewModel(application)
+                        RegisterViewModel(application,userDataSource)
+                    }
+                    isAssignableFrom(TopViewModel::class.java) -> {
+                        TopViewModel(application, userDataSource)
+                    }
+                    isAssignableFrom(ChatListViewModel::class.java) -> {
+                        ChatListViewModel(application)
+                    }
+                    isAssignableFrom(FriendViewModel::class.java) -> {
+                        FriendViewModel(application)
+                    }
+                    isAssignableFrom(MyPageViewModel::class.java) -> {
+                        MyPageViewModel(application)
                     }
                     else -> throw IllegalStateException("unknown view model: $modelClass")
                 }
@@ -36,25 +50,8 @@ class ViewModelFactory(context: Context) : ViewModelProvider.NewInstanceFactory(
 
     companion object {
         fun getInstance(activity: Context): ViewModelFactory = ViewModelFactory(
-                activity
-//                GenreRemoteDataSource.getInstance(activity),
-//                AdvertisementRemoteDataSource.getInstance(activity),
-//                UserRemoteDataSource.getInstance(activity),
-//                ChatRoomRepository.getInstance(activity),
-//                BookingRepository.getInstance(),
-//                AuthRemoteDataSource.getInstance(),
-//                CouponListRemoteDataSource.getInstance(),
-//                LeafletsRemoteDataSource.getInstance(),
-//                SceneRemoteDataSource.getInstance(activity),
-//                TimeSaleRemoteDataSource.getInstance(),
-//                TweetRequestRemoteDataSource.getInstance(),
-//                TockenRemoteDataSource.getInstance(),
-//                NewsRemoteDataSource.getInstance(),
-//                GoingOutRemoteDataSource.getInstance(),
-//                ResetPassRemoteDataSource.getInstance(),
-//                WorkDataSource.getInstance(),
-//                FirebaseUserRemoteDatasource.getInstance(),
-//                AdLeafletsRemoteDataSource.getInstance()
+                activity,
+                UserRemoteDataSource.getInstance()
         )
     }
 }

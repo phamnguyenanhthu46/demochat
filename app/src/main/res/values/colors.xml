@@ -12,4 +12,5 @@
 
     <!-- User list-->
     <color name="border_blue">#039BE5</color>
+    <color name="tranparent">#0D000000</color>
 </resources>

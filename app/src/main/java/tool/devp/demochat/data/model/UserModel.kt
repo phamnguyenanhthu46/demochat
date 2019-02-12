@@ -6,8 +6,9 @@ import java.util.*
 data class UserModel(
         var id: String,
         var userName: String,
+        var pass: String? = null,
         var createAt: Date,
-        var displayName: String,
+        var displayName: String? = null,
         var age: String? = null,
         var gender: Int? = 0,
         var avatar: String? = null,

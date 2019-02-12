@@ -10,7 +10,9 @@ data class UserEntity(
 
         var userName: String? = null,
 
-        var displayName: String,
+        var pass: String? = null,
+
+        var displayName: String? = null,
 
         var age: String? = null,
 
@@ -31,6 +33,7 @@ data class UserEntity(
                 UserEntity(
                         createAt = null,
                         userName = model.userName,
+                        pass = model.pass,
                         displayName = model.displayName,
                         age = model.age,
                         gender = model.gender,
@@ -40,5 +43,10 @@ data class UserEntity(
                         country = model.country,
                         timestamp = model.timestamp
                 )
+    }
+
+    enum class GENDER(var value: Int) {
+        MALE(1),
+        FEMALE(2)
     }
 }

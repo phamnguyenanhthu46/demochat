@@ -47,13 +47,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin20"
         android:layout_marginTop="@dimen/margin20"
-        android:text="@string/tvUserName"
+        android:text="@string/tvMail"
         android:textSize="26sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iconChat" />
 
     <EditText
-        android:id="@+id/edUserName"
+        android:id="@+id/edMail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin20"
@@ -71,7 +71,7 @@
         android:text="@string/tvPassword"
         android:textSize="26sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edUserName" />
+        app:layout_constraintTop_toBottomOf="@id/edMail" />
 
     <EditText
         android:id="@+id/edPass"
@@ -79,6 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin20"
         android:layout_marginEnd="@dimen/margin20"
+        android:inputType="textPassword"
         android:textSize="26sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titlePass" />
@@ -95,4 +96,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edPass" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/viewLoading"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:background="@color/tranparent">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
