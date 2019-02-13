@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:paddingBottom="@dimen/dimen12"
     android:paddingEnd="@dimen/dimen24"
-    android:paddingStart="@dimen/dimen10">
+    android:paddingStart="@dimen/dimen24">
 
     <include
         android:id="@+id/viewTime"

@@ -29,15 +29,23 @@ import tool.devp.demochat.presentation.schedulers.SchedulerProvider
 import tool.devp.demochat.presentation.uimodel.MessageUiModel
 import java.io.File
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ChatRoomViewModel(application: Application, private val roomRemote: ChatRoomRemoteDataSource, private val messageRemote: MessageRemoteDataSource) : BaseViewModel(application), MessageRemoteDataSource.MessageListener {
     val titleString = MutableLiveData<String>()
     val newMessage = MutableLiveData<MessageUiModel>()
-    private lateinit var mRoomId: String
+    val messages = MutableLiveData<List<MessageUiModel>>()
+    val toBottom = MutableLiveData<Boolean>()
+    var isLoadingMoreItems = false
+    var hasMoreItem = true
+    private var mRoomId: String? = null
     var senderId: String = DemoChatApp.INTANCE.store.userInfo!!.email!!
     private var imagePatch: String? = null
     private val subscriptions = CompositeDisposable()
 
+    /**
+     * start from list user
+     */
     fun start(taget: UserModel) {
         titleString.value = taget.userName
         DemoChatApp.INTANCE.store.userInfo?.let {
@@ -45,6 +53,9 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
         }
     }
 
+    /**
+     * start from list conversation
+     */
     fun start(room: ChatRoomModel) {
 
     }
@@ -56,23 +67,25 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
                 messageType = MessageModel.TYPE.TEXT.value,
                 senderID = senderId,
                 timeTemp = Calendar.getInstance().time
-                ).apply {
+        ).apply {
             postMessage(this)
         }
     }
 
-    private fun postMessage(mes: MessageModel){
-        subscriptions.add(
-                messageRemote.postMessage(mRoomId, mes)
-                        .subscribeOn(SchedulerProvider.io())
-                        .observeOn(SchedulerProvider.ui())
-                        .subscribe(
-                                {},
-                                {
-                                    Log.d("PhamDinhTuan", "")
-                                }
-                        )
-        )
+    private fun postMessage(mes: MessageModel) {
+        mRoomId?.let {
+            subscriptions.add(
+                    messageRemote.postMessage(it, mes)
+                            .subscribeOn(SchedulerProvider.io())
+                            .observeOn(SchedulerProvider.ui())
+                            .subscribe(
+                                    {},
+                                    {
+                                        Log.d("PhamDinhTuan", "")
+                                    }
+                            )
+            )
+        }
     }
 
     @SuppressLint("CheckResult")
@@ -82,7 +95,7 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
                         .doOnNext {
                             if (it.isPresent) {
                                 mRoomId = it.get().id
-                                messageRemote.subscribeMessage(mRoomId,null,this)
+                                messageRemote.subscribeMessage(mRoomId!!, this)
                             }
                         }
                         .flatMap {
@@ -105,6 +118,27 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
         )
     }
 
+    fun loadMoreItems() {
+        if (isLoadingMoreItems && !hasMoreItem) return
+        isLoadingMoreItems = true
+        mRoomId?.let {
+            subscriptions.add(
+                    messageRemote.messages(it, messages.value?.firstOrNull()?.id)
+                            .subscribeOn(SchedulerProvider.io())
+                            .observeOn(SchedulerProvider.ui())
+                            .subscribe(
+                                    {
+                                        onSuccess(it)
+                                    },
+                                    {
+                                        Log.d("PhamDinhTuan", "")
+                                    }
+                            )
+
+            )
+        }
+    }
+
     private fun newRoom(users: List<String>): ChatRoomModel =
             ChatRoomModel(
                     id = "",
@@ -114,7 +148,14 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
     private fun onSuccess(output: Any) {
         when (output) {
             is ArrayList<*> -> {
-                Log.d("PhamDinhTuan", "")
+                if (output.isEmpty()) {
+                    hasMoreItem = false
+                }
+                isLoadingMoreItems = false
+                messages.value = (output as ArrayList<MessageModel>).map {
+                    MessageUiModel.newIntance(senderId, it)
+                }.sortedBy { it.createdAt }
+
             }
             is String -> {
                 mRoomId = output
@@ -179,7 +220,7 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
 
     override fun onMessageLocal(items: List<MessageModel>) {
         items.forEach {
-            newMessage.value = MessageUiModel.newIntance(senderId,it).apply {
+            newMessage.value = MessageUiModel.newIntance(senderId, it).apply {
                 status = MessageUiModel.STATUS.PENDING.value
             }
         }
@@ -187,7 +228,7 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
 
     override fun onMessageServer(items: List<MessageModel>) {
         items.forEach {
-            newMessage.value = MessageUiModel.newIntance(senderId,it).apply {
+            newMessage.value = MessageUiModel.newIntance(senderId, it).apply {
                 status = MessageUiModel.STATUS.SUCCESS.value
             }
         }

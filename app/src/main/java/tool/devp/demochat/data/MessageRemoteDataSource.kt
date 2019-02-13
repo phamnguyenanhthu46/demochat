@@ -10,14 +10,14 @@ import io.reactivex.Single
 import tool.devp.demochat.data.converter.FirebaseConverter
 import tool.devp.demochat.data.entities.MessageEntity
 import tool.devp.demochat.data.model.MessageModel
-import tool.devp.demochat.data.repository.MessageRepository
+import java.util.*
 
 class MessageRemoteDataSource(database: FirebaseFirestore,
                               private val converter: FirebaseConverter<MessageModel>) {
     private val reference = database.collection(COLLECTION_MESSAGE)
     private var messageRegistration: ListenerRegistration? = null
 
-     fun postMessage(roomId: String, model: MessageModel): Completable =
+    fun postMessage(roomId: String, model: MessageModel): Completable =
             Completable.create { emitter ->
                 reference.document(roomId).collection(COLLECTION_MESSAGE_OF_ROOM).document()
                         .set(MessageEntity.newInstance(model))
@@ -30,7 +30,7 @@ class MessageRemoteDataSource(database: FirebaseFirestore,
             }
 
 
-     fun messages(roomId: String, firstItem: String?): Observable<List<MessageModel>> =
+    fun messages(roomId: String, firstItem: String?): Observable<List<MessageModel>> =
             Single.create<List<MessageModel>> { emiter ->
                 var query = reference.document(roomId).collection(COLLECTION_MESSAGE_OF_ROOM)
                         .orderBy(ATTR_CREATE_AT, Query.Direction.DESCENDING)
@@ -67,7 +67,7 @@ class MessageRemoteDataSource(database: FirebaseFirestore,
             }.toObservable()
 
 
-     fun deleteMessage(roomId: String, id: String): Completable =
+    fun deleteMessage(roomId: String, id: String): Completable =
             Completable.create { emitter ->
                 reference.document(roomId).collection(COLLECTION_MESSAGE_OF_ROOM).document(id).delete()
                         .addOnSuccessListener {
@@ -78,37 +78,20 @@ class MessageRemoteDataSource(database: FirebaseFirestore,
                         }
             }
 
-     fun subscribeMessage(roomId: String, firstItem: String?, listener: MessageListener) {
+    fun subscribeMessage(roomId: String, listener: MessageListener) {
         messageRegistration?.remove()
         var collectionRef = reference.document(roomId).collection(COLLECTION_MESSAGE_OF_ROOM)
-        if (firstItem == null) {
-            messageRegistration = collectionRef.orderBy(ATTR_CREATE_AT, Query.Direction.ASCENDING)
-                    .addSnapshotListener (MetadataChanges.INCLUDE){ snapshot, e ->
-                        snapshot?.let {
-                            if ( snapshot.metadata.hasPendingWrites()){
-                                listener.onMessageLocal( it.documentChanges.map { converter.deserialize(it) })
-                            }else {
-                                listener.onMessageServer( it.documentChanges.map { converter.deserialize(it) })
-                            }
+        messageRegistration = collectionRef.orderBy(ATTR_CREATE_AT, Query.Direction.ASCENDING)
+                .whereGreaterThan(ATTR_CREATE_AT, Calendar.getInstance().time)
+                .addSnapshotListener(MetadataChanges.INCLUDE) { snapshot, e ->
+                    snapshot?.let {
+                        if (snapshot.metadata.hasPendingWrites()) {
+                            listener.onMessageLocal(it.documentChanges.map { converter.deserialize(it) })
+                        } else {
+                            listener.onMessageServer(it.documentChanges.map { converter.deserialize(it) })
                         }
                     }
-        } else {
-            collectionRef.document(firstItem)
-                    .get()
-                    .addOnSuccessListener {
-                        messageRegistration = collectionRef.orderBy(ATTR_CREATE_AT, Query.Direction.ASCENDING)
-                                .startAfter(it)
-                                .addSnapshotListener { snapshot, e ->
-                                    snapshot?.let {
-                                        if ( snapshot.metadata.hasPendingWrites()){
-                                            listener.onMessageLocal( it.documentChanges.map { converter.deserialize(it) })
-                                        }else {
-                                            listener.onMessageServer( it.documentChanges.map { converter.deserialize(it) })
-                                        }
-                                    }
-                                }
-                    }
-        }
+                }
 
     }
 

@@ -8,6 +8,8 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import kotlinx.android.synthetic.main.activity_chat_room.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
@@ -41,9 +43,20 @@ class ChatRoomActivity : BaseActivity<ChatRoomViewModel>() {
                     tvTitle.text = it
                 }
             })
+            messages.observe(this@ChatRoomActivity, Observer {
+                it?.let {
+                    chatAdapter?.addMessage(it)
+                }
+            })
             newMessage.observe(this@ChatRoomActivity, Observer {
                 it?.let {
                     chatAdapter?.addOrUpdate(it)
+                }
+                scrollToBottom()
+            })
+            toBottom.observe(this@ChatRoomActivity, Observer {
+                it?.let {
+                    if(it) scrollToBottom()
                 }
             })
         }
@@ -92,8 +105,22 @@ class ChatRoomActivity : BaseActivity<ChatRoomViewModel>() {
         chatAdapter = ChatRoomAdapter(viewModel, arrayListOf()).apply {
             recyclerView.adapter = this
         }
+        recyclerView.run {
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+//                    if ((layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition() == 0)
+//                        viewModel.loadMoreItems()
+                }
+            })
+        }
     }
 
+    private fun scrollToBottom(){
+        recyclerView.run {
+            post { smoothScrollToPosition(chatAdapter!!.itemCount) }
+        }
+    }
     private fun takePicture() {
         val i = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         i.putExtra(MediaStore.EXTRA_OUTPUT, viewModel.createUri())

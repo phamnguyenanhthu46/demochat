@@ -18,41 +18,7 @@ class MainActivity : AppCompatActivity() {
     private var mainAdapter: MainAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setupMainPage()
-        onSelectTab()
+        setContentView(R.layout.act_main)
     }
 
-    private fun setupMainPage() {
-        val fragments = ArrayList<Fragment>()
-        fragments.add(MainFragmentFactory[TopFragment::class.java])
-        fragments.add(MainFragmentFactory[FriendFragment::class.java])
-        fragments.add(MainFragmentFactory[ChatListFragment::class.java])
-        fragments.add(MainFragmentFactory[MyPageFragment::class.java])
-        vpMain.run {
-            mainAdapter = MainAdapter(fragments, supportFragmentManager)
-            offscreenPageLimit = 4
-            smoothScroll = false
-            adapter = mainAdapter
-        }
-    }
-
-    private fun onSelectTab() {
-        rgNavMain.setOnCheckedChangeListener { _, i ->
-            when (i) {
-                R.id.rbTop -> {
-                    vpMain.currentItem = 0
-                }
-                R.id.rbFriend -> {
-                    vpMain.currentItem = 1
-                }
-                R.id.rbChatList -> {
-                    vpMain.currentItem = 2
-                }
-                R.id.rbMyPage -> {
-                    vpMain.currentItem = 3
-                }
-            }
-        }
-    }
 }

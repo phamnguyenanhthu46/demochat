@@ -1,5 +1,6 @@
 package tool.devp.demochat.presentation.adapters
 
+import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -77,9 +78,15 @@ class ChatRoomAdapter(var viewModel: ChatRoomViewModel, var messages: ArrayList<
         }
     }
 
+    fun addMessage(list: List<MessageUiModel>) {
+        messages.addAll(0, list)
+    }
+
     abstract inner class TextHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvContent = itemView.findViewById<TextView>(R.id.speech)
         val time = itemView.findViewById<TextView>(R.id.createdAt)
+        val timeGroup = itemView.findViewById<TextView>(R.id.tvTime)
+        val viewTime = itemView.findViewById<ConstraintLayout>(R.id.viewTime)
 
         abstract fun binData(mess: MessageUiModel)
     }
@@ -87,6 +94,8 @@ class ChatRoomAdapter(var viewModel: ChatRoomViewModel, var messages: ArrayList<
     abstract inner class ImageHolder(view: View) : RecyclerView.ViewHolder(view) {
         var imgContent = itemView.findViewById<ImageView>(R.id.content)
         var time = itemView.findViewById<TextView>(R.id.createdAt)
+        val timeGroup = itemView.findViewById<TextView>(R.id.tvTime)
+        val viewTime = itemView.findViewById<ConstraintLayout>(R.id.viewTime)
 
         abstract fun binData(mess: MessageUiModel)
     }
@@ -94,6 +103,12 @@ class ChatRoomAdapter(var viewModel: ChatRoomViewModel, var messages: ArrayList<
     inner class TextSentHolder(view: View) : TextHolder(view) {
         private val imgSuccess = itemView.findViewById<ImageView>(R.id.imgSuccess)
         override fun binData(mess: MessageUiModel) {
+            if (mess.isNewDay) {
+                timeGroup.text = mess.createdAt?.converDateString(DATE_FORMAT)
+                viewTime.visible()
+            } else {
+                viewTime.gone()
+            }
             tvContent.text = mess.content
             time.text = mess.createdAt?.converDateString(TIME_FORMAT)
             if (mess.status == MessageUiModel.STATUS.PENDING.value) {
@@ -106,6 +121,12 @@ class ChatRoomAdapter(var viewModel: ChatRoomViewModel, var messages: ArrayList<
 
     inner class TextRecieveHolder(view: View) : TextHolder(view) {
         override fun binData(mess: MessageUiModel) {
+            if (mess.isNewDay) {
+                timeGroup.text = mess.createdAt?.converDateString(DATE_FORMAT)
+                viewTime.visible()
+            } else {
+                viewTime.gone()
+            }
             tvContent.text = mess.content
             time.text = mess.createdAt?.converDateString(TIME_FORMAT)
         }
@@ -114,6 +135,12 @@ class ChatRoomAdapter(var viewModel: ChatRoomViewModel, var messages: ArrayList<
     inner class ImageSentHolder(view: View) : ImageHolder(view) {
         val imgSuccess = itemView.findViewById<ImageView>(R.id.imgSuccess)
         override fun binData(mess: MessageUiModel) {
+            if (mess.isNewDay) {
+                timeGroup.text = mess.createdAt?.converDateString(DATE_FORMAT)
+                viewTime.visible()
+            } else {
+                viewTime.gone()
+            }
             imgContent.loadImage(itemView.context, mess.content)
             time.text = mess.createdAt?.converDateString(TIME_FORMAT)
             if (mess.status == MessageUiModel.STATUS.PENDING.value) {
@@ -126,6 +153,12 @@ class ChatRoomAdapter(var viewModel: ChatRoomViewModel, var messages: ArrayList<
 
     inner class ImageRecieveHolder(view: View) : ImageHolder(view) {
         override fun binData(mess: MessageUiModel) {
+            if (mess.isNewDay) {
+                timeGroup.text = mess.createdAt?.converDateString(DATE_FORMAT)
+                viewTime.visible()
+            } else {
+                viewTime.gone()
+            }
             imgContent.loadImage(itemView.context, mess.content)
             time.text = mess.createdAt?.converDateString(TIME_FORMAT)
         }
