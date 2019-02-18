@@ -78,8 +78,14 @@ class ChatRoomAdapter(var viewModel: ChatRoomViewModel, var messages: ArrayList<
         }
     }
 
+    /**
+     * load history message
+     * if the first load scroll to last message
+     */
     fun addMessage(list: List<MessageUiModel>) {
         messages.addAll(0, list)
+        notifyItemRangeInserted(0, list.count() -1)
+//        if(list.count() == messages.count())viewModel.toBottom.value = true
     }
 
     abstract inner class TextHolder(view: View) : RecyclerView.ViewHolder(view) {

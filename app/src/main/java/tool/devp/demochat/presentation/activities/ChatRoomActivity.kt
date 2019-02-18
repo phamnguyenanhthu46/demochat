@@ -106,6 +106,10 @@ class ChatRoomActivity : BaseActivity<ChatRoomViewModel>() {
             recyclerView.adapter = this
         }
         recyclerView.run {
+            var manager = LinearLayoutManager(this@ChatRoomActivity,LinearLayoutManager.VERTICAL,false).apply {
+//                stackFromEnd = true
+                layoutManager = this
+            }
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)

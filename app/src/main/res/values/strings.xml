@@ -35,4 +35,10 @@
     <!-- Chat-->
     <string name="chat_hint">Add message</string>
 
+    <!-- Drawer menu-->
+    <string name="menu_profile">About</string>
+    <string name="menu_logout">Logout</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="search_hint">search text</string>
 </resources>
