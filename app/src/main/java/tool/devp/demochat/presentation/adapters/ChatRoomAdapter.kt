@@ -147,7 +147,7 @@ class ChatRoomAdapter(var viewModel: ChatRoomViewModel, var messages: ArrayList<
             } else {
                 viewTime.gone()
             }
-            imgContent.loadImage(itemView.context, mess.content)
+            imgContent.loadImageChat(itemView.context, mess.content)
             time.text = mess.createdAt?.converDateString(TIME_FORMAT)
             if (mess.status == MessageUiModel.STATUS.PENDING.value) {
                 imgSuccess.invisible()
@@ -165,7 +165,7 @@ class ChatRoomAdapter(var viewModel: ChatRoomViewModel, var messages: ArrayList<
             } else {
                 viewTime.gone()
             }
-            imgContent.loadImage(itemView.context, mess.content)
+            imgContent.loadImageChat(itemView.context, mess.content)
             time.text = mess.createdAt?.converDateString(TIME_FORMAT)
         }
     }

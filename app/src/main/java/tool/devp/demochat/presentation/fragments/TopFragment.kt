@@ -48,6 +48,9 @@ class TopFragment : BaseFragment<TopViewModel>() {
         }
     }
 
+    fun onFilter(s: String){
+        userAdapter?.filter?.filter(s)
+    }
     companion object {
         const val TAG = "TopFragment"
 

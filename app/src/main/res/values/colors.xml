@@ -18,4 +18,7 @@
     <color name="divider_color_setting">#f1f1f1</color>
     <color name="tv_chat_receive">#333333</color>
     <color name="greyLight">#737373</color>
+
+    <color name="transparent">#00FFFFFF</color>
+    <color name="main">#009688</color>
 </resources>

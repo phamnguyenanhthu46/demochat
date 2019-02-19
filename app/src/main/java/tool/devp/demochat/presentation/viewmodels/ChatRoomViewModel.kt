@@ -32,6 +32,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class ChatRoomViewModel(application: Application, private val roomRemote: ChatRoomRemoteDataSource, private val messageRemote: MessageRemoteDataSource) : BaseViewModel(application), MessageRemoteDataSource.MessageListener {
+    var TAG = ChatRoomViewModel::class.java.name
     val titleString = MutableLiveData<String>()
     val newMessage = MutableLiveData<MessageUiModel>()
     val messages = MutableLiveData<List<MessageUiModel>>()
@@ -61,10 +62,14 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
     }
 
     fun sendMessage(content: String) {
+       postMessage(content, MessageModel.TYPE.TEXT.value)
+    }
+
+    fun postMessage(content: String, typye: Int){
         MessageModel(
                 id = "",
                 content = content,
-                messageType = MessageModel.TYPE.TEXT.value,
+                messageType = typye,
                 senderID = senderId,
                 timeTemp = Calendar.getInstance().time
         ).apply {
@@ -81,7 +86,7 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
                             .subscribe(
                                     {},
                                     {
-                                        Log.d("PhamDinhTuan", "")
+                                        Log.d(TAG, "")
                                     }
                             )
             )
@@ -112,7 +117,7 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
                                     onSuccess(it)
                                 },
                                 {
-                                    Log.d("PhamDinhTuan", "")
+                                    Log.d(TAG, "")
                                 }
                         )
         )
@@ -131,7 +136,7 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
                                         onSuccess(it)
                                     },
                                     {
-                                        Log.d("PhamDinhTuan", "")
+                                        Log.d(TAG, "")
                                     }
                             )
 
@@ -167,12 +172,14 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
         local?.let {
             val file = File(context.getImagePathFromUri(it))
             if (file.exists()) {
-                uploadImageToFireStore(file.absolutePath)
+                uploadImageToFireStore(file.absolutePath) {
+                    postMessage(it,MessageModel.TYPE.IMAGE.value)
+                }
             }
         }
     }
 
-    fun uploadImageToFireStore(patch: String) {
+    fun uploadImageToFireStore(patch: String, onSuccess: (url: String) -> Unit) {
         val storage = FirebaseStorage.getInstance("gs://demochatfirebase-d15e7.appspot.com")
         val storageRef = storage.reference
 
@@ -180,17 +187,18 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
         val fileRef = storageRef.child("images/${file.lastPathSegment}")
         var uploadTask = fileRef.putFile(file)
 
-        val urlTask = uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+        uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
             if (!task.isSuccessful) {
                 task.exception?.let {
-                    Log.d("PhamDinhTuan", "")
+                    Log.d(TAG, "")
                 }
             }
             return@Continuation fileRef.downloadUrl
         }).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val downloadUri = task.result
-                Log.d("PhamDinhTuan", "")
+                onSuccess.invoke( task.result.toString())
+                Log.d(TAG, "")
             }
         }
     }
@@ -208,7 +216,9 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
     fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_TAKE_PICTURE) {
             if (resultCode == Activity.RESULT_OK) {
-
+                imagePatch?.let {
+                    postMessage(it,MessageModel.TYPE.IMAGE.value)
+                }
             }
         }
         if (requestCode == REQUEST_CODE_PICK_PICTURE) {

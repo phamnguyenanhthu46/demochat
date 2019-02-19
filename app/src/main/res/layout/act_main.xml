@@ -17,9 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <fragment
+        <FrameLayout
             android:id="@+id/container"
-            android:name="tool.devp.demochat.presentation.fragments.TopFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

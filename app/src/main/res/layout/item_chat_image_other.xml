@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/itemLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingEnd="@dimen/dimen5">
+    android:paddingStart="12dp"
+    android:paddingEnd="24dp"
+    android:paddingBottom="18dp">
 
     <include
         android:id="@+id/viewTime"
@@ -14,51 +15,54 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.constraint.ConstraintLayout
+    <ImageView
+        android:id="@+id/content"
         android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintDimensionRatio="W,1:1"
+        app:layout_constraintEnd_toStartOf="@id/profileContainer"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewTime" />
+
+    <TextView
+        android:id="@+id/createdAt"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="8dp"
+        android:textColor="@color/greyLight"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@id/content"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="@id/content"
+        app:layout_constraintTop_toBottomOf="@id/content" />
+
+    <LinearLayout
+        android:id="@+id/profileContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.8"
-        app:layout_constraintTop_toBottomOf="@+id/viewTime">
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="@dimen/img_size_status"
-            app:layout_constraintDimensionRatio="W,1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_avatar_default" />
+            android:id="@+id/profilePhoto"
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
 
-        <ImageView
-            android:id="@+id/imgSuccess"
-            android:layout_width="@dimen/img_size_status"
-            android:layout_height="@dimen/img_size_status"
-            android:src="@drawable/ic_success"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@id/content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/content" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp" />
 
-        <TextView
-            android:id="@+id/createdAt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            tools:text="12:50"
-            android:paddingBottom="8dp"
-            android:textColor="@color/greyLight"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@id/content"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="@id/content"
-            app:layout_constraintTop_toBottomOf="@id/content" />
-
-    </android.support.constraint.ConstraintLayout>
-
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

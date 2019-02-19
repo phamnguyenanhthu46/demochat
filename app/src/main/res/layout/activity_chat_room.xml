@@ -78,20 +78,6 @@
                 tools:ignore="RtlCompat" />
 
             <ImageView
-                android:id="@+id/galleryAction"
-                android:layout_width="@dimen/btn_camera_size"
-                android:layout_height="@dimen/btn_camera_size"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/ic_gallery"
-                android:padding="@dimen/dimen16"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cameraAction"
-                app:layout_constraintTop_toTopOf="parent"
-               />
-
-            <ImageView
                 android:id="@+id/sendAction"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
@@ -104,6 +90,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                  />
+
+            <ImageView
+                android:id="@+id/galleryAction"
+                android:layout_width="@dimen/btn_camera_size"
+                android:layout_height="@dimen/btn_camera_size"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="@dimen/dimen16"
+                android:src="@drawable/ic_gallery"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cameraAction"
+                app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>

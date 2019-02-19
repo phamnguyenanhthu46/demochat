@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgIconApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:src="@mipmap/ic_app_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgFace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/about_img_margin_start"
+        android:layout_marginTop="@dimen/about_img_margin_top"
+        android:src="@drawable/ic_facebook"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgIconApp" />
+
+    <TextView
+        android:id="@+id/tvFace"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="Page For learning"
+        android:textSize="@dimen/about_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/imgFace"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgFace"
+        app:layout_constraintTop_toTopOf="@id/imgFace" />
+
+    <ImageView
+        android:id="@+id/imgGit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/about_img_margin_start"
+        android:layout_marginTop="@dimen/about_img_margin_top"
+        android:src="@drawable/ic_github"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFace" />
+
+    <TextView
+        android:id="@+id/tvGit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="Github"
+        android:textSize="@dimen/about_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/imgGit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgGit"
+        app:layout_constraintTop_toTopOf="@id/imgGit" />
+
+
+    <ImageView
+        android:id="@+id/imgStoreAndroid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/about_img_margin_start"
+        android:layout_marginTop="@dimen/about_img_margin_top"
+        android:src="@drawable/ic_android"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgGit" />
+
+    <TextView
+        android:id="@+id/tvStoreAndroid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="App Store"
+        android:textSize="@dimen/about_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/imgStoreAndroid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgStoreAndroid"
+        app:layout_constraintTop_toTopOf="@id/imgStoreAndroid" />
+</android.support.constraint.ConstraintLayout>
