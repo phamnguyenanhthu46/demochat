@@ -18,7 +18,9 @@ class AboutActivity : AppCompatActivity() {
         tvFace.setOnClickListener {
             openPage()
         }
-        tvGit.setOnClickListener { }
+        tvGit.setOnClickListener {
+            openGitPage()
+        }
         tvStoreAndroid.setOnClickListener {
             openStore()
         }
@@ -40,7 +42,9 @@ class AboutActivity : AppCompatActivity() {
     }
 
     private fun openGitPage() {
-
+        var link = "https://github.com/phamtuan2046"
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+        startActivity(browserIntent)
     }
 
     private fun openStore() {

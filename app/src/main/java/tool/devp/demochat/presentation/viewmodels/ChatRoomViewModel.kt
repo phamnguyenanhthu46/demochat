@@ -180,7 +180,7 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
     }
 
     fun uploadImageToFireStore(patch: String, onSuccess: (url: String) -> Unit) {
-        val storage = FirebaseStorage.getInstance("gs://demochatfirebase-d15e7.appspot.com")
+        val storage = FirebaseStorage.getInstance(STORE_URL)
         val storageRef = storage.reference
 
         var file = Uri.fromFile(File(patch))
@@ -242,5 +242,9 @@ class ChatRoomViewModel(application: Application, private val roomRemote: ChatRo
                 status = MessageUiModel.STATUS.SUCCESS.value
             }
         }
+    }
+
+    companion object {
+        const val STORE_URL = "gs://demochat-2b9c4.appspot.com"
     }
 }
